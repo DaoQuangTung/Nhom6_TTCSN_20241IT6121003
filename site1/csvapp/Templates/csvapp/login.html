@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+<style>
+    /* Container chứa form đăng nhập */
+.container {
+    max-width: 500px;
+    margin: 50px auto; /* Canh giữa form */
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 10px; /* Bo tròn góc */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Tạo bóng mờ cho form */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Tiêu đề form */
+.container h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+h3::before {
+    content: "Chào mừng đến với hệ thống quản lý kho hàng thiết bị di động. Thành viên nhóm: Phạm Văn Nam, Nguyễn Hoàng Phúc, Nguyễn Đình Phương, Lê Văn Quân, Đào Quang Tùng, Bùi Minh Đức";
+    position: absolute;
+    left: 100%; 
+    font-size: 1.2rem;
+    color: #333;
+    white-space: nowrap; 
+    animation: slide 15s linear infinite; 
+    font-weight: bold;
+}
+
+@keyframes slide {
+    0% {
+        left: 100%; 
+    }
+    100% {
+        left: -100%; 
+    }
+}
+
+
+
+@keyframes slide {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+
+label {
+    display: block;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+
+input[type="text"], input[type="password"], select {
+    width: 95%;
+    padding: 12px;
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+
+input[type="text"]:focus, input[type="password"]:focus, select:focus {
+    border-color: #f7c331;
+    background-color: #fff; 
+}
+
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #f7c331;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #ff5733; 
+}
+
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Đăng nhập</h2>
+        
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="username">Tài khoản:</label>
+            <input type="text" id="username" name="username" placeholder="Nhập tài khoản" required>
+
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+
+            <label for="role">Vai trò:</label>
+            <select id="role" name="role" required>
+                <option value="" disabled selected>Chọn vai trò</option>
+<option value="admin">Admin</option>
+                <option value="nhanvien">Nhân viên</option>
+            </select>
+
+            <button type="submit">Đăng nhập</button>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="error">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+    <h3></h3>
+</body>
+</html>

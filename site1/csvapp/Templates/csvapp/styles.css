@@ -1,0 +1,181 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #b2576e, #4babc5);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.form-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    width: 350px;
+    transition: transform 0.3s ease;
+    opacity: 0;  /* Start as invisible for fade-in effect */
+    transform: translateY(20px);  /* Start slightly lower for effect */
+}
+
+.form-container.visible {
+    opacity: 1;
+    transform: translateY(0);  /* Move to original position */
+}
+
+.header-image {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #007bff;
+    text-align: center;
+    font-weight: 600;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #007bff;
+}
+
+input {
+    width: 100%;
+    padding: 10px 40px; /* Increased padding for icon space */
+    border: 1px solid #007bff;
+    border-radius: 25px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.error {
+    color: red;
+    display: none;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.loader {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.toggle-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.toggle-btn {
+    background: none;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 5px 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #0056b3;
+}
+
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode input {
+    border-color: #555;
+}
+
+.dark-mode .btn {
+    background-color: #555;
+}
+
+.dark-mode .btn:hover {
+    background-color: #444;
+}
+
+.dark-mode .toggle-btn {
+    border-color: #fff;
+    color: white;
+}
+.social-icons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: #007bff; /* Màu mặc định của liên kết */
+    text-decoration: none;
+    font-size: 24px; /* Kích thước biểu tượng */
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #0056b3; /* Màu khi hover */
+}

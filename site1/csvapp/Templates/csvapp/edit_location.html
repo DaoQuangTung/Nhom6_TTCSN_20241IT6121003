@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Danh Mục Kho</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            height: 100px;
+            background-color: rgba(0, 51, 102, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+  /* Menu dọc */
+.navbar-vertical {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-vertical ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-vertical ul li {
+    margin: 10px 0;
+}
+
+.navbar-vertical ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.navbar-vertical ul li a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+    transform: translateX(5px);
+}
+
+.navbar-vertical ul li a i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+        input, textarea, select {
+            border-radius: 6px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+
+    <!-- Navbar with Icons -->
+    <nav class="navbar-vertical">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Chỉnh Sửa Danh Mục Kho</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cập Nhật Vị Trí Kho</button>
+        </form>
+
+        <a href="{% url 'location_management' %}" class="btn btn-secondary mt-3">Quay lại Quản lý Vị trí Kho</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

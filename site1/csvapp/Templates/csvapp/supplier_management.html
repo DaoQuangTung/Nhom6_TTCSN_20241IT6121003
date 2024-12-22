@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhà Cung Cấp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            height: 100px;
+            background-color: rgba(0, 51, 102, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+/* Menu dọc */
+.navbar-vertical {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-vertical ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-vertical ul li {
+    margin: 10px 0;
+}
+
+.navbar-vertical ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.navbar-vertical ul li a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+    transform: translateX(5px);
+}
+
+.navbar-vertical ul li a i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+/* Tổng thể */
+.container {
+    padding: 20px;
+
+}
+
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Nút */
+.btn {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Bảng */
+.table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: white;
+}
+
+.table th,
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.table th {
+    background: #007bff;
+    color: white;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ddd;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: #dc3545;
+    color: white;
+}
+
+.modal-footer .btn {
+    border-radius: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+    <nav class="navbar-vertical">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            {% if user.is_superuser %}
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+
+            {% endif %}
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+    <div class="container mt-5">
+        <h2>Quản Lý Nhà Cung Cấp</h2>
+        {% if user.is_superuser %}
+        <a href="{% url 'add_supplier' %}" class="btn btn-primary mb-3">Thêm Nhà Cung Cấp Mới</a>
+
+        {% endif %}
+
+        <button id="exportBtn" class="btn btn-success mb-3">Xuất CSV</button>
+
+        <table class="table table-bordered" id="supplierTable">
+            <thead>
+                <tr>
+                    <th>Tên Nhà Cung Cấp</th>
+                    <th>Địa Chỉ</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Email</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.address }}</td>
+                    <td>{{ supplier.phone }}</td>
+                    <td>{{ supplier.email }}</td>
+                    <td>
+                        {% if user.is_superuser %}
+                        <a href="{% url 'edit_supplier' supplier.id %}" class="btn btn-warning btn-sm">Sửa</a>
+                        <button class="btn btn-danger btn-sm delete-supplier" data-id="{{ supplier.id }}">Xóa</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'trangchu' %}" class="btn btn-secondary mt-3">Quay lại Trang Chủ</a>
+    </div>
+
+    <!-- Modal xác nhận xóa -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa nhà cung cấp này?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let supplierId;
+
+        // Bắt sự kiện click vào nút xóa
+        $('.delete-supplier').on('click', function() {
+            supplierId = $(this).data('id');
+            $('#deleteModal').modal('show');
+        });
+
+        // Bắt sự kiện click vào nút xác nhận xóa
+        $('#confirmDelete').on('click', function() {
+            $.ajax({
+                url: '{% url "delete_supplier" 0 %}'.replace('0', supplierId), // Thay thế 0 bằng supplierId
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}' // Gửi mã CSRF
+                },
+                success: function(response) {
+                    // Xóa dòng tương ứng trong bảng
+                    $('button[data-id="' + supplierId + '"]').closest('tr').remove();
+                    $('#deleteModal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Có lỗi xảy ra khi xóa nhà cung cấp.');
+                }
+            });
+        });
+
+        // Chức năng xuất CSV có hỗ trợ tiếng Việt với BOM
+        $('#exportBtn').on('click', function() {
+            const table = document.getElementById('supplierTable');
+            let csvContent = 'data:text/csv;charset=utf-8,\uFEFF'; // Bắt đầu với BOM để hỗ trợ tiếng Việt
+
+            // Lấy tất cả các hàng trong bảng
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const cols = row.querySelectorAll('td, th');
+                let rowData = [];
+                cols.forEach(col => rowData.push('"' + col.innerText.trim() + '"')); // Bao dấu ngoặc kép và xóa khoảng trắng thừa
+                csvContent += rowData.join(',') + '\n';
+            });
+
+            // Tạo tệp CSV và tự động tải xuống
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'nhacungcap.csv'); // Tên tệp CSV
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); // Xóa link sau khi tải xuống
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      /* Toàn bộ trang */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu dọc */
+.navbar-vertical {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-vertical ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-vertical ul li {
+    margin: 10px 0;
+}
+
+.navbar-vertical ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.navbar-vertical ul li a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+    transform: translateX(5px);
+}
+
+.navbar-vertical ul li a i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.container {
+    margin-left: 280px;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    justify-content: space-evenly;
+    gap: 40px;
+}
+
+.product-card {
+    width: 310px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    padding: 20px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-image-container {
+    position: relative;
+    text-align: center;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
+}
+
+.delete-image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    padding: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.delete-image:hover {
+    background-color: #e63946;
+    transform: scale(1.1);
+}
+
+
+.product-details {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+margin-bottom: 10px;
+}
+
+.product-details strong {
+    color: #333;
+}
+.btn {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+
+
+.product-link {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+.product-details {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+form {
+    max-width: 500px; 
+    margin: 0 auto;    
+}
+
+
+.input-group .form-control {
+    border-radius: 25px;   
+    padding: 12px 20px;     
+    font-size: 16px;       
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;  
+    transition: all 0.3s ease;  
+}
+
+.input-group .form-control:hover,
+.input-group .form-control:focus {
+    border-color: #007bff;  
+    background-color: #ffffff;  
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); 
+    outline: none; 
+}
+
+
+.input-group-append .btn {
+    border-top-right-radius: 25px;  
+    border-bottom-right-radius: 25px; 
+    padding: 12px 25px;    
+    font-size: 16px;      
+    background-color: #007bff; 
+    color: white;          
+    border: none;         
+    cursor: pointer;    
+    transition: all 0.3s ease;  
+}
+
+
+.input-group-append .btn:hover {
+    background-color: #0056b3; 
+    transform: scale(1.05);     
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+.input-group-append .btn:focus {
+    outline: none; 
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: rgb(141, 225, 233);
+    font-size: 2rem;
+    user-select: none;
+    z-index: 9999;
+    pointer-events: none;
+    animation: snow 10s linear infinite;
+  }
+  
+  @keyframes snow {
+    to {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+
+.input-group {
+    display: flex;
+    align-items: center;
+    max-width: 700px; 
+    margin: 0 auto;  
+    margin-left: 200px;
+}
+
+
+.input-group .form-control {
+    margin-right: 5px; 
+}
+
+.o {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-evenly;
+    gap: 15px; 
+    margin-bottom: 20px;
+}
+
+
+.o .btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.o .btn-warning {
+    background-color: #ffc107;
+    color: white;
+}
+
+
+.o .btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    margin-left: 40px; 
+    margin-top: 10px;
+}
+
+
+.o .btn:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+
+.o div {
+    display: flex;
+justify-content: center;
+    align-items: center;
+}
+
+    </style>
+</head>
+<body>
+    <div class="header bg-primary text-white p-3">
+        <div class="header-content text-center">
+            <h2>Nhóm 6 - Thực tập cơ sở ngành</h2>
+        </div>
+    </div>
+
+    <div class="navbar-vertical">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            {% if user.is_superuser %}
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            {% endif %}            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </div>
+
+    <div class="container mt-5">
+        <div style="display: grid; grid-template-columns: repeat(2,auto);">
+            <div>
+                <h2 style="margin-top: 10px;">Quản Lý Sản Phẩm</h2>
+            </div>
+            <div>
+                <form method="GET" action="{% url 'product_management' %}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm..." value="{{ request.GET.search }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if user.is_superuser %}
+        <a href="{% url 'add_product' %}" class="btn btn-primary mb-3">Thêm Sản Phẩm Mới</a>
+        {% endif %}
+        
+        <div class="product-container">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="product-image-container">
+                    {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" alt="Hình ảnh của {{ product.name }}" class="product-image" style = "width: 268px ;height: 250px">
+                        {% if user.is_superuser %}
+                        <button class="delete-image" data-product-id="{{ product.id }}" data-image-id="{{ product.images.first.id }}">
+                            <i class="fas fa-trash" data-id="{{ product.id }}"></i>
+                        </button>
+                        {% endif %}
+                    {% else %}
+                        <p>Không có hình ảnh.</p>
+                    {% endif %}
+                </div>
+                <a href="{% url 'product_detail' product.id %}" class="product-link" style="text-decoration:none">
+                    <div class="product-details">
+                        <strong>Tên Sản Phẩm:</strong> {{ product.name }}<br>
+                        <strong>Mô Tả:</strong> {{ product.description }}<br>
+                        <strong>Giá:</strong> {{ product.price }} đ<br>
+                        <strong>Số Lượng:</strong> {{ product.quantity }}<br>
+                        <strong>Nhà Cung Cấp:</strong> {{ product.supplier.name }}<br>
+                        <strong>Vị Trí:</strong> {{ product.location.name }}<br>
+                    </div>
+                </a>
+                {% if user.is_superuser %}
+                <div class="o" style="display: grid; grid-template-columns: repeat(2, auto); justify-content: space-evenly;">
+                    <div>
+                        <a href="{% url 'edit_product' product.id %}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger btn-sm delete-product" data-id="{{ product.id }}">
+                            <i class="fas fa-trash"></i> Xóa
+                        </button>
+                    </div>
+                </div>
+                <a href="{% url 'add_product_image' product.id %}" class="btn btn-primary btn-sm" style="margin-top: 10px; margin-left: 40px;">
+                    Thêm Hình Ảnh
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <a href="{% url 'trangchu' %}" class="btn btn-secondary mt-3">Quay lại Trang Chủ</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+
+    document.querySelectorAll('.delete-product').forEach(button => {
+        button.addEventListener('click', function(event) {
+            const productId = event.target.getAttribute('data-id');
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                window.location.href = `/products/delete/${productId}/`;
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-image').forEach(button => {
+    button.addEventListener('click', function(event) {
+        const productId = button.getAttribute('data-product-id'); 
+        const imageId = button.getAttribute('data-image-id'); 
+        if (productId && imageId && confirm('Bạn có chắc chắn muốn xóa hình ảnh này?')) {
+
+            window.location.href = `/products/${productId}/delete_image/${imageId}/`;
+        } 
+    });
+});
+function createSnowflakes() {
+    var snowflakesCount = 50; 
+    var snowContainer = document.body;
+
+    for (var i = 0; i < snowflakesCount; i++) {
+      var snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.textContent = "❄";  
+      snowflake.style.left = Math.random() * 100 + "vw"; 
+      snowflake.style.animationDuration = Math.random() * 10 + 5 + "s"; 
+      snowflake.style.animationDelay = Math.random() * 10 + "s"; 
+      snowContainer.appendChild(snowflake);
+    }
+  }
+  window.onload = function() {
+    createSnowflakes();
+    setInterval(updateClock, 1000);  
+    updateClock();  
+  };
+</script>
+</html>

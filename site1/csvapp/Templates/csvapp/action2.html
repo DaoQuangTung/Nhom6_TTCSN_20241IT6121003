@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action 2 - Sales by City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            height: 80px;
+            background-color: #003366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f0f2f5;
+            width: 220px;
+            padding-top: 20px;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: calc(100% - 80px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .navbar ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar ul li a i {
+            margin-right: 10px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4a69bd;
+            color: #ffffff;
+        }
+
+        /* Main container */
+        .container {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Sales Data */
+        .chart-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #nd ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        #nd li {
+            padding: 8px;
+            background: #f7f7f7;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* Download Button */
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Error message */
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #ffffff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Thực tập cơ sở ngành</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <div id="nd">
+        <!-- Main content -->
+    <div class="container">
+        <div class="content">
+            <h2>Sales by City</h2>
+            {% if error_message %}
+                <p class="error">{{ error_message }}</p>
+            {% else %}
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ sales_chart }}" alt="Sales by City Chart">
+                </div>
+                <h3>Sales Data:</h3>
+                <ul>
+                    {% for city, sales in sales.items %}
+                        <li>{{ city }}: {{ sales|floatformat:2 }} USD</li>
+                    {% endfor %}
+                </ul>
+                <a href="?download_image=1" class="download-button">Download Chart as PNG</a>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

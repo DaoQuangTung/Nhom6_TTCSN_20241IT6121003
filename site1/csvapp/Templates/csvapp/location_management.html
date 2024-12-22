@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Danh Mục</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+/* Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #c7d8e3);
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+.header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.navbar-vertical {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-vertical ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-vertical ul li {
+    margin: 10px 0;
+}
+
+.navbar-vertical ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.navbar-vertical ul li a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+    transform: translateX(5px);
+}
+
+.navbar-vertical ul li a i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+/* Content Area */
+.container {
+    margin-left: 260px;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+.table th, .table td {
+    padding: 18px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table th {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    font-size: 16px;
+}
+
+.table td {
+    background-color: #f9f9f9;
+}
+
+.table .btn {
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.table .btn:hover {
+    transform: scale(1.05);
+}
+
+/* Button Hover Effects */
+.btn-primary, .btn-warning, .btn-danger, .btn-secondary {
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-warning:hover, .btn-danger:hover, .btn-secondary:hover {
+    transform: scale(1.05);
+    background-color: #0056b3;
+}
+
+/* Footer Styling */
+footer {
+    background: #2d3436;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-body {
+    font-size: 16px;
+    padding: 20px;
+}
+
+.modal-footer .btn {
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+/* Utility Classes */
+.mt-5 {
+    margin-top: 50px;
+}
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+.hide-scrollbar {
+    overflow: hidden;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Thực tập cơ sở ngành</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar-vertical">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục</a></li>
+            {% if user.is_superuser %}
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            {% endif %}
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Content -->
+    <div class="container">
+        <h2>Quản Lý Danh Mục</h2>
+        {% if user.is_superuser %}
+        <a href="{% url 'add_location' %}" class="btn btn-primary mb-3">Thêm Danh mục Mới</a>
+
+        {% endif %}
+
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tên Danh mục</th>
+                    <th>Mô Tả</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for location in locations %}
+                <tr>
+                    <td>{{ location.name }}</td>
+                    <td>{{ location.description }}</td>
+                    <td>
+                        {% if user.is_superuser %}
+                        <a href="{% url 'edit_location' location.id %}" class="btn btn-warning btn-sm">Sửa</a>
+                        <button class="btn btn-danger btn-sm delete-location" data-id="{{ location.id }}">Xóa</button>
+                        {% endif %}
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'trangchu' %}" class="btn btn-secondary mt-3">Quay lại Trang Chủ</a>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa Danh mục này?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        let locationId;
+
+        $('.delete-location').on('click', function() {
+            locationId = $(this).data('id');
+            $('#deleteModal').modal('show');
+        });
+
+        $('#confirmDelete').on('click', function() {
+            $.ajax({
+                url: '{% url "delete_location" 0 %}'.replace('0', locationId),
+                type: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                success: function() {
+                    $('button[data-id="' + locationId + '"]').closest('tr').remove();
+                    $('#deleteModal').modal('hide');
+                },
+                error: function() {
+                    alert('Có lỗi xảy ra.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Management System</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; 
+    color: #333; 
+    line-height: 1.6;
+}
+.snowflake {
+    position: absolute;
+    top: -10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+.header-content{
+    display: flex;
+
+}
+
+.header-content .login-logout {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background-color: #f7c331;
+    color: #333;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.header-content .login-logout a {
+    text-decoration: none; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.1rem; 
+    font-weight: bold;
+    color: #333; 
+    padding: 8px 16px; 
+    border-radius: 5px; 
+    transition: all 0.3s ease; 
+}
+
+
+.header-content .login-logout a:hover {
+    color: #fff; 
+    transform: scale(1.05); 
+}
+
+
+.header-content .login-logout a:active {
+    transform: scale(0.98); 
+    background-color: #ff5733; 
+}
+
+.header-content .login-logout:hover {
+    background-color: #ff5733;
+    transform: translateY(-50%) scale(1.05);
+    color: white;
+}
+
+.header {
+    background: radial-gradient(circle at top left, #ff5733, #f7c331); /* Màu vàng cam cho sự tươi mới */
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.navbar ul li a:hover {
+    background-color: #ff5733; 
+    transform: scale(1.1); 
+}
+
+.dashboard {
+    margin: 40px;
+    text-align: center;
+}
+
+.dashboard h2 {
+    font-size: 3rem; 
+    color: #ff5733; 
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: slideIn 1s ease-out, fadeIn 1.5s ease-in; 
+    letter-spacing: 2px; 
+    transition: transform 0.3s ease, color 0.3s ease; 
+}
+
+.dashboard h2:hover {
+    transform: scale(1.1); 
+    color: #d32f2f; 
+}
+
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes slideIn {
+    0% {
+opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.function-overview {
+    display: grid;
+    grid-template-columns: repeat(3,auto); 
+    padding: 20px;
+    justify-items: center;
+    gap: 20px;
+}
+
+.function-box {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+
+
+    border: none;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s ease, box-shadow 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.function-box:hover {
+    transform: translateY(-12px) rotate(2deg);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+}
+
+.function-box h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: color 0.5s ease, transform 0.5s ease;
+}
+
+.function-box:hover h3 {
+    color: #000000;
+    transform: scale(1.2);
+}
+
+.function-box .button {
+    background: linear-gradient(135deg, #ffe000, #ebbc8d);
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.5s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.function-box .button:hover {
+    background: linear-gradient(135deg, #ffd700, #ff4500);
+    transform: scale(1.3) rotate(-2deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    color: #000000;
+}
+
+.function-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    z-index: -1;
+}
+
+.function-box:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+:root {
+    --primary-color: #ff5733;
+    --secondary-color: #f7c331;
+    --background-color: #f5f5f5;
+    --hover-color: #f7c331;
+}
+
+@media (max-width: 768px) {
+    .navbar ul li {
+        margin: 0 10px;
+    }
+
+    .function-overview {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .function-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .function-box {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .dashboard h2 {
+        font-size: 2rem;
+    }
+}
+
+.i {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.i h2 {
+    margin-right: auto;  
+}
+.i .search-function{
+margin-bottom: 40px;
+}
+.search-function button {
+    padding: 10px 20px;
+    background-color: #ff5733;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 50px;  
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /
+}
+
+.search-function button:hover {
+    background-color: #e04d2c;
+    transform: scale(1.1);  
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); 
+    border-color: #ffffff;  
+    color: #f9f9f9; 
+}
+
+.search-function button:focus {
+    outline: none;  
+}
+#search-input {
+        height: 40px;
+        width: 220px;
+        padding: 0 15px;
+        border-radius: 50px;
+        border: 2px solid #ff5733;
+        font-size: 14px;
+        color: #333;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        outline: none;
+    }
+
+    #search-input::placeholder {
+        color: #888;
+        font-style: italic;
+    }
+
+    #search-input:focus {
+        border-color: #e04d2c;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        background-color: #f8f8f8;
+    }
+    .ngaygio {
+    font-size: 18px;
+    color: #898686;
+    background-color: #3d5770;
+}
+.ngaygio i {
+    margin-right: 8px;
+    color: #007bff;
+}
+        </style>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var headerContent = document.getElementById('header-content');
+            var headerHeight = document.querySelector('.header').offsetHeight;
+
+            if (window.scrollY > headerHeight - 100) {
+                headerContent.classList.add('fixed');
+            } else {
+                headerContent.classList.remove('fixed');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const ngaygioElement = document.querySelector('.ngaygio');
+
+    function updateDateTime() {
+        const now = new Date();
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        };
+
+        const regionCode = Intl.DateTimeFormat().resolvedOptions().locale.split('-').pop(); 
+        const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(regionCode);
+        ngaygioElement.innerHTML = `
+            <span>${now.toLocaleDateString('vi-VN', options)}</span><br>
+            <span>${countryName}</span>
+        `;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+});
+
+
+    </script>
+</head>
+
+<body>
+    
+    <header class="header">
+        <div class="header-background"></div>
+        <div class="header-content" id="header-content">
+            <div>
+            <h1>Nhóm 6-Thực tập cơ sở ngành</h1></div>
+            <div class="login-logout">
+                <a href="{% url 'login' %}"> Đăng xuất</a>
+            </div>
+            
+        </div>
+    </header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'product_management' %}"> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    
+    <main class="dashboard">
+        <div class="i">
+            <div><h2 style="margin-left: 100px;">Chức năng quản lý</h2></div>
+            <div class="search-function">
+                <input type="text" placeholder="Tìm kiếm chức năng..." id="search-input" style="height: 40px; width: 220px; padding: 0 15px; border-radius: 50px; border: 2px solid #ff5733; font-size: 14px; color: #333; background-color: #fff; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); outline: none;">
+                <button type="button" id="search-btn">Tìm kiếm</button>
+            </div>
+        </div>
+        <section class="function-overview">
+            <div class="function-box">
+                <h3>Quản lý Sản phẩm</h3>
+                <a href="{% url 'product_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Danh mục sản phẩm</h3>
+                <a href="{% url 'location_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Báo cáo Doanh thu</h3>
+                <a href="{% url 'upload_files' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Nhà cung cấp</h3>
+                <a href="{% url 'supplier_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Nhập kho</h3>
+                <a href="{% url 'warehouse_entry_list' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Xuất kho</h3>
+                <a href="{% url 'warehouse_exit_list' %}" class="button">Xem chi tiết</a>
+            </div>
+        </section>
+    </main>
+
+
+    <div class="footer">
+        <a href="mailto:support@example.com" class="footer-link">Liên hệ hỗ trợ</a> || 
+        <a href="#"class="footer-link">Cài đặt hệ thống</a>
+    </div>
+    
+    <style>
+        .footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            margin-top: 30px;
+        }
+    
+        .footer-link {
+            color: #ff5733;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+    
+        .footer-link:hover {
+            color: #e04d2c;
+            transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+        }
+    
+        .footer-link:focus {
+            outline: none;
+        }
+    </style>
+    
+</body>
+
+<script>
+  
+document.getElementById('search-btn').addEventListener('click', function() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const functionBoxes = document.querySelectorAll('.function-box');
+
+    functionBoxes.forEach(function(box) {
+        const title = box.querySelector('h3').textContent.toLowerCase();
+        if (title.includes(searchInput)) {
+            box.style.display = 'block';  
+        } else {
+            box.style.display = 'none'; 
+        }
+    });
+});
+
+
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const snowflakeCount = 100; 
+      const body = document.body;
+  
+      for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        const size = Math.random() * 10 + 5 + 'px';
+        const left = Math.random() * window.innerWidth + 'px';
+        const animationDuration = Math.random() * 3 + 2 + 's';
+        const animationDelay = Math.random() * 5 + 's';
+  
+        snowflake.style.width = size;
+        snowflake.style.height = size;
+        snowflake.style.left = left;
+        snowflake.style.animation = `fall ${animationDuration} linear ${animationDelay} infinite`;
+  
+        body.appendChild(snowflake);
+      }
+    });
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(`
+      @keyframes fall {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+    `, styleSheet.cssRules.length);
+  </script>
+</html>

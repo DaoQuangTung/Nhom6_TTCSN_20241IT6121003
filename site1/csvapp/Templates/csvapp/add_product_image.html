@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Hình Ảnh Sản Phẩm</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            height: 80px;
+            background-color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar-vertical {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            background-color: #ffffff;
+            padding-top: 20px;
+            border-right: 1px solid #ddd;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-vertical ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .navbar-vertical ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-vertical ul li a:hover {
+            background-color: #e9ecef;
+            color: #007bff;
+        }
+
+        .navbar-vertical ul li a i {
+            margin-right: 10px;
+        }
+
+        .container {
+            margin-left: 270px;
+            padding: 30px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+
+.container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+    font-size: 1.8rem;
+    color: #333;
+    text-transform: uppercase;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+form button.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+form button.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+form a.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+form a.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.product-image {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+
+h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+
+.row .col-md-3 {
+    margin-bottom: 20px;
+}
+
+
+.row .col-12 p {
+    font-size: 1rem;
+    color: #888;
+    text-align: center;
+    font-style: italic;
+}
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Nhóm 6 - Thực tập cơ sở ngành</h1>
+    </header>
+
+    <nav class="navbar-vertical">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4">Thêm Hình Ảnh cho Sản Phẩm: <strong>{{ product.name }}</strong></h2>
+
+        <form method="POST" enctype="multipart/form-data" class="mb-5">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Thêm Hình Ảnh</button>
+            <a href="{% url 'product_management' %}" class="btn btn-secondary ml-2">Quay lại</a>
+        </form>
+
+        <h3 class="mb-3">Hình Ảnh Hiện Có:</h3>
+        <div class="row">
+            {% for image in images %}
+                <div class="col-md-3">
+                    <div class="product-image">
+                        <img src="{{ image.image.url }}" alt="Hình ảnh sản phẩm">
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p>Chưa có hình ảnh nào cho sản phẩm này.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Nhóm 6 - Thực tập cơ sở ngành</p>
+    </footer>
+
+</body>
+</html>

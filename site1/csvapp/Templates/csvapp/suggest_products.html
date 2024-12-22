@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm Gợi Ý</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            height: 100px;
+            background-color: rgba(0, 51, 102, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f0f2f5;  /* White gray background */
+            width: 220px;
+            padding-top: 20px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            height: calc(100% - 100px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            width: 100%;
+        }
+
+        .navbar ul li {
+            width: 100%;
+        }
+
+        .navbar ul li a {
+            color: #333; /* Black text color */
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+
+        .navbar ul li a i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4a69bd;
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* Main content */
+        #nd {
+            margin-left: 240px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        #nd h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #nd form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        #nd input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        #nd input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #nd input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .total-products {
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        #nd ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #nd ul li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #nd ul li h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        #nd ul li p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Thực tập cơ sở ngành</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="nd">
+        <h1>Gợi Ý Sản Phẩm</h1>
+        <form method="GET" action="{% url 'suggest_products' %}">
+            <input type="text" name="product_name" placeholder="Nhập tên sản phẩm cần gợi ý" required>
+            <input type="submit" value="Gợi ý">
+        </form>
+
+        <p class="total-products">Tổng số sản phẩm trong bảng: {{ total_products }}</p>
+
+        {% if suggestions %}
+            <h2>Gợi ý sản phẩm:</h2>
+            <ul>
+                {% for product in suggestions %}
+                    <li>
+                        <h3>{{ product.Product }}</h3>
+                        <p>Tổng số lượng: {{ product.Total_Quantity }}</p>
+                        <p>Tổng doanh thu: {{ product.Total_Sales|floatformat:2 }} VNĐ</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Không tìm thấy sản phẩm nào phù hợp.</p>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

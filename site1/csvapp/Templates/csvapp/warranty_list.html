@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Xuất Kho</title>
+</head>
+<body>
+    <h1>Phiếu Xuất Kho</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <h3>Chọn Sản Phẩm</h3>
+        <div id="products">
+            <label for="product_1">Sản phẩm 1:</label>
+            <input type="text" name="product_1" id="product_1">
+            <label for="quantity_1">Số lượng:</label>
+            <input type="number" name="quantity_1" id="quantity_1" min="1" step="1">
+            <!-- Bạn có thể tạo thêm các sản phẩm khác tương tự -->
+        </div>
+        
+        <button type="submit">Tạo Phiếu Xuất Kho</button>
+    </form>
+</body>
+</html>

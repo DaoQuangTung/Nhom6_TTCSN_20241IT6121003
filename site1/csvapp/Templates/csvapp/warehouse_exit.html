@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuất Kho</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Giao diện form xuất kho */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+        select, input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        .product-checkbox {
+            margin-right: 10px;
+        }
+        .quantity-input {
+            display: none;
+            margin-top: 5px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .total-quantity {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Xuất Kho</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="exit-date">Chọn Ngày Xuất:</label>
+        <input type="date" id="exit-date" name="exit_date" required>
+
+        <h3>Chọn Nhà Cung Cấp:</h3>
+        <select id="supplier-select" name="supplier" required>
+            <option value="">--Chọn Nhà Cung Cấp--</option>
+            {% for supplier in suppliers %}
+                <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div id="product-list"></div>
+
+        <div class="total-quantity">Tổng Số Lượng: <span id="total-quantity">0</span></div>
+
+        <button type="submit">Xuất Kho</button>
+    </form>
+
+    <a href="{% url 'warehouse_exit_list' %}">Quay lại danh sách</a>
+
+    <script>
+        $(document).ready(function() {
+            // Load products based on selected supplier
+            $('#supplier-select').change(function() {
+                var supplierId = $(this).val();
+                if (supplierId) {
+                    $.ajax({
+                        url: '{% url "get_supplier_products" supplier_id=0 %}'.replace('0', supplierId),
+                        type: 'GET',
+                        success: function(data) {
+                            var productsHtml = '<h3>Chọn Sản Phẩm:</h3>';
+                            if (data.products.length > 0) {
+                                data.products.forEach(function(product) {
+                                    productsHtml += `
+                                        <label>
+                                            <input type="checkbox" class="product-checkbox" data-product-id="${product.id}" name="product_${product.id}">
+                                            ${product.name}
+                                            <input type="number" name="quantity_${product.id}" min="0" value="0" class="quantity-input" placeholder="Số lượng" data-product-id="${product.id}">
+                                        </label><br>
+                                    `;
+                                });
+                            } else {
+                                productsHtml = '<p>Không có sản phẩm cho nhà cung cấp này.</p>';
+                            }
+                            $('#product-list').html(productsHtml);
+                            updateTotalQuantity();
+                        },
+                        error: function() {
+                            alert("Không thể lấy dữ liệu sản phẩm. Vui lòng thử lại.");
+                        }
+                    });
+                } else {
+                    $('#product-list').html('');
+                    $('#total-quantity').text('0');
+                }
+            });
+
+            // Toggle quantity input visibility based on checkbox state
+            $(document).on('change', '.product-checkbox', function() {
+                var productId = $(this).data('product-id');
+                if (this.checked) {
+                    $(`input[data-product-id="${productId}"]`).show();
+                } else {
+                    $(`input[data-product-id="${productId}"]`).hide().val(0);
+                    updateTotalQuantity();
+                }
+            });
+
+            // Update total quantity as quantities are entered
+            $(document).on('input', '.quantity-input', function() {
+                updateTotalQuantity();
+            });
+
+            // Calculate and display total quantity
+            function updateTotalQuantity() {
+                var totalQuantity = 0;
+                $('.quantity-input').each(function() {
+                    totalQuantity += parseInt($(this).val()) || 0;
+                });
+                $('#total-quantity').text(totalQuantity);
+            }
+        });
+    </script>
+</body>
+</html>

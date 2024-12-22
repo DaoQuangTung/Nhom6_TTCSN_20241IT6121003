@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Phiếu Nhập Kho</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group input[type="number"] {
+            width: 50%;
+        }
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        #total-quantity {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .submit-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+        #other-products {
+            margin-top: 20px;
+        }
+        #other-products div {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sửa Phiếu Nhập Kho</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="entry-date">Ngày Nhập:</label>
+                <input type="date" id="entry-date" name="entry_date" value="{{ entry.entry_date }}" required>
+            </div>
+            <div class="form-group">
+                <label for="supplier">Nhà Cung Cấp:</label>
+                <select name="supplier" id="supplier">
+                    {% for supplier in suppliers %}
+                        <option value="{{ supplier.id }}" {% if supplier.id == entry.supplier.id %}selected{% endif %}>
+                            {{ supplier.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng Thái:</label>
+                <select name="status" id="status">
+                    <option value="PENDING" {% if entry.status == 'PENDING' %}selected{% endif %}>Chưa nhập</option>
+                    <option value="PROCESSING" {% if entry.status == 'PROCESSING' %}selected{% endif %}>Đang xử lý</option>
+                    <option value="COMPLETED" {% if entry.status == 'COMPLETED' %}selected{% endif %}>Đã nhập</option>
+                </select>
+            </div>
+            <h3>Sản phẩm:</h3>
+            <div id="product-list">
+                {% for entry_product in entry_products %}
+                    <div class="form-group">
+                        <label>{{ entry_product.product.name }}:</label>
+                        <input type="number" name="quantity_{{ entry_product.product.id }}" value="{{ entry_product.quantity|default:0 }}" class="quantity-input" required>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="other-products"></div>
+            <div class="total-quantity">Tổng Số Lượng: <span id="total-quantity">{{ entry.total_quantity }}</span></div>
+            <div class="submit-button">
+                <button type="submit">Cập Nhật</button>
+            </div>
+        </form>
+        <a class="back-link" href="{% url 'warehouse_entry_list' %}">Quay lại danh sách</a>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Tính tổng số lượng
+            function updateTotalQuantity() {
+                var totalQuantity = 0;
+                $(".quantity-input").each(function() {
+                    totalQuantity += parseInt($(this).val() || 0);
+                });
+                $('#total-quantity').text(totalQuantity);
+            }
+
+            // Gán sự kiện input cho tất cả các ô nhập số lượng hiện có
+            $(".quantity-input").on('input', updateTotalQuantity);
+
+            // AJAX để lấy các sản phẩm của nhà cung cấp khác
+            $('#supplier').change(function() {
+                var supplierId = $(this).val();
+                if (supplierId) {
+                    $.ajax({
+                        url: "{% url 'get_supplier_products' supplier_id='0' %}".replace('0', supplierId),
+                        success: function(data) {
+                            $('#other-products').empty();
+                            data.products.forEach(function(product) {
+                                var existingProduct = $("input[name='quantity_" + product.id + "']");
+                                if (existingProduct.length === 0) {
+                                    var productHtml = `
+                                        <div class="form-group">
+                                            <label>${product.name}:</label>
+                                            <input type="number" name="quantity_${product.id}" value="0" class="quantity-input">
+                                        </div>
+                                    `;
+                                    $('#other-products').append(productHtml);
+                                }
+                            });
+                            // Gán sự kiện input cho các ô nhập số lượng mới
+                            $(".quantity-input").off('input').on('input', updateTotalQuantity);
+                        }
+                    });
+                }
+            });
+
+            // Cập nhật tổng số lượng khi trang tải lần đầu
+            updateTotalQuantity();
+        });
+    </script>
+</body>
+</html>

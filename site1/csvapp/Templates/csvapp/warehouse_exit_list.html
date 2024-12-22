@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Xuất Kho</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; 
+    color: #333; 
+    line-height: 1.6;
+}
+.snowflake {
+    position: absolute;
+    top: -10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+.header-content{
+    display: flex;
+
+}
+
+.header-content .login-logout {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background-color: #f7c331;
+    color: #333;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.header-content .login-logout a {
+    text-decoration: none; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.1rem; 
+    font-weight: bold;
+    color: #333; 
+    padding: 8px 16px; 
+    border-radius: 5px; 
+    transition: all 0.3s ease; 
+}
+
+
+.header-content .login-logout a:hover {
+    color: #fff; 
+    transform: scale(1.05); 
+}
+
+
+.header-content .login-logout a:active {
+    transform: scale(0.98); 
+    background-color: #ff5733; 
+}
+
+.header-content .login-logout:hover {
+    background-color: #ff5733;
+    transform: translateY(-50%) scale(1.05);
+    color: white;
+}
+
+.header {
+    background: radial-gradient(circle at top left, #ff5733, #f7c331); /* Màu vàng cam cho sự tươi mới */
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.navbar ul li a:hover {
+    background-color: #ff5733; 
+    transform: scale(1.1); 
+}
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .alert {
+            padding: 10px;
+            background-color: #f1c40f;
+            color: #333;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        select {
+            padding: 5px;
+            font-size: 14px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ced4da;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar input[type="text"]::placeholder {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.search-bar input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}
+    </style>
+    <script>
+        // JavaScript để xử lý sự thay đổi trạng thái
+        function handleStatusChange(selectElement) {
+            const selectedStatus = selectElement.value;
+
+            // Lấy tất cả các tùy chọn trong dropdown
+            const options = selectElement.querySelectorAll('option');
+
+            // Kiểm tra nếu chọn "Đang xử lý"
+            if (selectedStatus === 'Đang xử lý') {
+                options.forEach(option => {
+                    if (option.value === 'Chưa xuất') {
+                        option.disabled = true;  // Không thể chọn "Chưa xuất"
+                    } else if (option.value === 'Đã xuất') {
+                        option.disabled = false; // Cho phép chọn "Đã xuất"
+                    }
+                });
+            }
+            // Kiểm tra nếu chọn "Đã xuất"
+            else if (selectedStatus === 'Đã xuất') {
+                options.forEach(option => {
+                    if (option.value === 'Đang xử lý') {
+                        option.disabled = true;  // Không thể chọn "Đang xử lý"
+                    } else if (option.value === 'Chưa xuất') {
+                        option.disabled = true; // Không thể chọn "Chưa xuất"
+                    }
+                });
+            }
+            // Nếu chọn "Chưa xuất"
+            else {
+                options.forEach(option => {
+                    option.disabled = false;  // Cho phép chọn tất cả các trạng thái
+                });
+            }
+        }
+
+        // Đảm bảo trạng thái được vô hiệu hóa khi tải trang
+        window.onload = function() {
+            const statusSelects = document.querySelectorAll('select[name="status"]');
+            statusSelects.forEach(select => handleStatusChange(select));
+        };
+        // Đảm bảo trạng thái được vô hiệu hóa khi tải trang
+        window.onload = function() {
+            const statusSelects = document.querySelectorAll('select[name="status"]');
+            statusSelects.forEach(select => handleStatusChange(select));
+        };
+
+        function searchTable() {
+            const searchInput = document.getElementById('searchInput');
+            const filter = searchInput.value.toLowerCase();
+            const table = document.querySelector('table tbody');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j] && cells[j].innerText.toLowerCase().includes(filter)) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+
+    <!-- Navbar with Icons -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            {% if user.is_superuser %}
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            {% endif %}
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+    <h1>Danh Sách Xuất Kho</h1>
+
+    <div>
+        <a href="{% url 'warehouse_exit' %}" class="btn">Xuất Kho Mới</a>
+        <a href="{% url 'product_management' %}" class="btn">Quay lại</a>
+    </div>
+    <div class="search-bar">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Tìm kiếm theo ngày, nhà cung cấp, trạng thái...">
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ngày Xuất</th>
+                <th>Nhà Cung Cấp</th>
+                <th>Tổng Số Lượng</th>
+                <th>Sản Phẩm</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exit in exits %}
+                <tr>
+                    <td>{{ exit.exit_date }}</td>
+                    <td>{{ exit.supplier.name }}</td>
+                    <td>{{ exit.total_quantity }}</td>
+                    <td>
+                        <ul>
+                            {% for exit_product in exit.exit_products.all %}
+                                <li>{{ exit_product.product.name }}: {{ exit_product.quantity }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'update_exit_status' exit.id %}">
+                            {% csrf_token %}
+                            <select name="status" onchange="handleStatusChange(this)">
+                                <option value="Chưa xuất" {% if exit.status == 'Chưa xuất' %}selected{% endif %}>Chưa xuất</option>
+                                <option value="Đang xử lý" {% if exit.status == 'Đang xử lý' %}selected{% endif %}>Đang xử lý</option>
+                                <option value="Đã xuất" {% if exit.status == 'Đã xuất' %}selected{% endif %}>Đã xuất</option>
+                            </select>
+                            <button type="submit">Cập nhật trạng thái</button>
+                        </form>
+                        
+                    </td>
+                    <td>
+                        {% if exit.status == 'Chưa xuất' %}
+                        <a href="{% url 'warehouse_exit_edit' exit.id %}">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a> | 
+                        <a href="{% url 'warehouse_exit_delete' exit.id %}" class="text-danger">
+                            <i class="fas fa-trash-alt"></i> Xóa
+                        </a>
+                        
+                        {% else %}
+                        <span><i class="fas fa-lock" style="color: #8f8d8d;" ></i><i style="color: #8f8d8d;"  >Không thể sửa/xóa</i></span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">Không có dữ liệu xuất kho nào.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

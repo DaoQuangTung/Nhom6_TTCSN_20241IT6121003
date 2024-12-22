@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            height: 80px;
+            background-color: #003366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f0f2f5;
+            width: 220px;
+            padding-top: 20px;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: calc(100% - 80px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow-y: auto;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            width: 100%;
+        }
+
+        .navbar ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 4px;
+            margin: 4px 0;
+        }
+
+        .navbar ul li a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4a69bd;
+            color: #ffffff;
+        }
+
+        /* Main Content */
+        #nd {
+            margin-left: 240px;
+            padding: 30px;
+            padding-top: 120px;
+            min-height: calc(100vh - 80px);
+        }
+
+        #nd h1 {
+            font-size: 28px;
+            color: #d9534f;
+            margin-bottom: 15px;
+        }
+
+        #nd p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Nhóm 6 - Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+
+    <!-- Navbar with Icons -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="trangchu.html"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="nd">
+        <h1>Error</h1>
+        <p>{{ message }}</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

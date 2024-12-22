@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Success</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            height: 100px;
+            background-color: rgba(0, 51, 102, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f0f2f5;  /* White gray background */
+            width: 220px;
+            padding-top: 20px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            height: calc(100% - 100px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            width: 100%;
+        }
+
+        .navbar ul li {
+            width: 100%;
+        }
+
+        .navbar ul li a {
+            color: #333; /* Black text color */
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+
+        .navbar ul li a i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4a69bd;
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* Content Section */
+        /* Content Section */
+#nd {
+    margin-left: 240px; /* Make space for navbar */
+    padding: 40px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 140px);
+    background-color: #f7f0f5; /* Màu pastel nhẹ nhàng */
+    border-radius: 15px; /* Bo tròn mềm mại */
+    border: 1px solid #e0d5de; /* Viền pastel nhạt */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 40px auto; /* Center horizontally */
+}
+
+#nd h1 {
+    color: #4CAF50;
+    font-size: 30px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#nd p {
+    margin-bottom: 25px;
+    font-size: 18px;
+    color: #555; /* Màu chữ tối hơn chút để dễ đọc */
+    text-align: center;
+    max-width: 80%;
+    line-height: 1.6;
+}
+
+#nd a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 280px;
+    margin: 12px 0;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #82c8e6; /* Màu xanh pastel */
+    text-decoration: none;
+    border-radius: 12px; /* Bo tròn mềm mại */
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+#nd a:hover {
+    background-color: #4fa3c7; /* Đổi màu xanh đậm hơn khi hover */
+    transform: scale(1.05);
+}
+
+#nd a i {
+    margin-right: 10px;
+    font-size: 20px; /* Increase icon size */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        box-shadow: none;
+        padding-top: 10px;
+    }
+
+    #nd {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    #nd h1 {
+        font-size: 24px;
+    }
+
+    #nd p {
+        font-size: 16px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+
+    <!-- Navbar with Icons -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Success Message and Links -->
+    <div id="nd">
+        <h1>Upload Successful!</h1>
+        <p>Your file has been uploaded successfully. You can now view the following reports:</p>
+        <a href="{% url 'action1' %}"><i class="fas fa-chart-line"></i> Sales Monthly Chart</a>
+        <a href="{% url 'action2' %}"><i class="fas fa-city"></i> Sales City Chart</a>
+        <a href="{% url 'action3' %}"><i class="fas fa-clock"></i> Sales Hour Chart</a>
+        <a href="{% url 'action4' %}"><i class="fas fa-th-large"></i> Product Combinations</a>
+        <a href="{% url 'action5' %}"><i class="fas fa-star"></i> Best Seller Products</a>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            margin: 0;
+        }
+        .card p {
+            margin: 5px 0 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>Welcome, Admin!</div>
+        <div>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="card">
+            <h3>Manage Users</h3>
+            <p>Create, update, or delete user accounts.</p>
+            <a href="#" class="button">Go to User Management</a>
+        </div>
+        <div class="card">
+            <h3>Manage Products</h3>
+            <p>Add, edit, or delete product information.</p>
+            <a href="#" class="button">Go to Product Management</a>
+        </div>
+        <div class="card">
+            <h3>View Reports</h3>
+            <p>Analyze warehouse activities and generate reports.</p>
+            <a href="#" class="button">Go to Reports</a>
+        </div>
+    </div>
+</body>
+</html>

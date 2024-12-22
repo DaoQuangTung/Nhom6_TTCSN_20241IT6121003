@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả Tìm kiếm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            height: 100px;
+            background-color: rgba(0, 51, 102, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f0f2f5; /* White gray background */
+            width: 220px;
+            padding-top: 20px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            height: calc(100% - 100px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 20px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            width: 100%;
+        }
+
+        .navbar ul li {
+            width: 100%;
+        }
+
+        .navbar ul li a {
+            color: #333; /* Black text color */
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+
+        .navbar ul li a i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4a69bd;
+            color: #ffffff;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 240px; /* Make space for navbar */
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        /* Search Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        form input {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                box-shadow: none;
+                padding-top: 10px;
+            }
+
+            main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            form input, form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+
+    <!-- Navbar with Icons -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Tìm Kiếm Đơn Hàng</h1>
+        <form method="GET" action="{% url 'search_orders_view' %}">
+            <label for="query">Nhập ID đơn hàng:</label>
+            <input type="text" id="query" name="query" required>
+            <button type="submit">Tìm Kiếm</button>
+        </form>
+
+        <h2>Kết quả tìm kiếm cho: "{{ query }}"</h2>
+
+        {% if search_results %}
+            <table>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Product</th>
+                    <th>Quantity Ordered</th>
+                    <th>Price Each</th>
+                    <th>Purchase Address</th>
+                </tr>
+                {% for order in search_results %}
+                    <tr>
+                        <td>{{ order.Order_ID|default:"" }}</td>
+                        <td>{{ order.Order_Date|default:"" }}</td>
+                        <td>{{ order.Product|default:"" }}</td>
+                        <td>{{ order.Quantity_Ordered|default:"" }}</td>
+                        <td>{{ order.Price_Each|default:"" }}</td>
+                        <td>{{ order.Purchase_Address|default:"" }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Không tìm thấy đơn hàng nào.</p>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

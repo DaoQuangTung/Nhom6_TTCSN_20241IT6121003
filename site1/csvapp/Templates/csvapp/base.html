@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Warehouse Management{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+    }
+
+    /* Header */
+    .header {
+        height: 100px;
+        background-color: rgba(0, 51, 102, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .header h1 {
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    /* Sidebar Navbar */
+    .navbar {
+        background-color: #f0f2f5;
+        width: 220px;
+        padding-top: 20px;
+        position: fixed;
+        top: 100px;
+        left: 0;
+        height: calc(100% - 100px);
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        z-index: 1;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        width: 100%;
+    }
+
+    .navbar ul li {
+        width: 100%;
+    }
+
+    .navbar ul li a {
+        color: #333;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: 8px;
+        margin: 8px 0;
+    }
+
+    .navbar ul li a i {
+        margin-right: 10px;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #4a69bd;
+        color: #ffffff;
+    }
+
+    /* Main Content Container */
+    .main-content {
+        margin-left: 240px; /* Khoảng cách để không bị đè lên navbar */
+        margin-top: 120px; /* Khoảng cách để không đè lên header */
+        padding: 1.5rem;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 15px 0;
+        background: #333;
+        color: #fff;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        z-index: 1;
+    }
+</style>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Thực tập cơ sở ngành</h1>
+        </div>
+    </header>
+
+    <!-- Sidebar Navbar with Icons -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'trangchu' %}"><i class="fas fa-home"></i> Về trang chủ</a></li>
+            <li><a href="{% url 'product_management' %}"><i class="fas fa-cogs"></i> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"><i class="fas fa-list-alt"></i> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"><i class="fas fa-upload"></i> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"><i class="fas fa-truck"></i> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"><i class="fas fa-boxes"></i> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"><i class="fas fa-exchange-alt"></i> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

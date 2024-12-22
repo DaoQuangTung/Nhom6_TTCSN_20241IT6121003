@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Management System</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; 
+    color: #333; 
+    line-height: 1.6;
+}
+.header-content{
+    display: flex;
+
+}
+
+.header-content .login-logout {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background-color: #f7c331;
+    color: #333;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.header-content .login-logout a {
+    text-decoration: none; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.1rem; 
+    font-weight: bold;
+    color: #333; 
+    padding: 8px 16px; 
+    border-radius: 5px; 
+    transition: all 0.3s ease; 
+}
+
+
+.header-content .login-logout a:hover {
+    color: #fff; 
+    transform: scale(1.05); 
+}
+
+
+.header-content .login-logout a:active {
+    transform: scale(0.98); 
+    background-color: #ff5733; 
+}
+
+.header-content .login-logout:hover {
+    background-color: #ff5733;
+    transform: translateY(-50%) scale(1.05);
+    color: white;
+}
+
+.header {
+    background: radial-gradient(circle at top left, #ff5733, #f7c331); /* Màu vàng cam cho sự tươi mới */
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.navbar ul li a:hover {
+    background-color: #ff5733; 
+    transform: scale(1.1); 
+}
+
+.dashboard {
+    margin: 40px;
+    text-align: center;
+}
+
+.dashboard h2 {
+    font-size: 2.5rem;
+    color: #ff5733;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: bold;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.function-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 0 10px;
+    justify-items: center;
+}
+
+.function-box {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.function-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    background-color: #ff5733; 
+    color: white;
+}
+
+.function-box h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.function-box .button {
+    background-color: #f7c331; 
+    color: #333;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.function-box .button:hover {
+    background-color: #ff5733;
+    transform: scale(1.1);
+    color: white;
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+:root {
+    --primary-color: #ff5733;
+    --secondary-color: #f7c331;
+    --background-color: #f5f5f5;
+    --hover-color: #f7c331;
+}
+
+@media (max-width: 768px) {
+    .navbar ul li {
+        margin: 0 10px;
+    }
+
+    .function-overview {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .function-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .function-box {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .dashboard h2 {
+        font-size: 2rem;
+    }
+}
+        </style>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var headerContent = document.getElementById('header-content');
+            var headerHeight = document.querySelector('.header').offsetHeight;
+
+            if (window.scrollY > headerHeight - 100) {
+                headerContent.classList.add('fixed');
+            } else {
+                headerContent.classList.remove('fixed');
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-background"></div>
+        <div class="header-content" id="header-content">
+            <div>
+            <h1>Thực tập cơ sở ngành</h1></div>
+            <div class="login-logout">
+                <a href="{% url 'login' %}"> Đăng xuất</a>
+            </div>
+        </div>
+    </header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'product_management' %}"> Quản lý Sản phẩm</a></li>
+<li><a href="{% url 'location_management' %}"> Quản lý Danh mục sản phẩm</a></li>
+          
+            <li><a href="{% url 'supplier_management' %}"> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"> Quản lý nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"> Quản lý xuất kho</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+        <h2 style="margin-right: 950px;">Chức năng quản lý</h2>
+        <section class="function-overview">
+            <div class="function-box">
+                <h3>Quản lý Sản phẩm</h3>
+                <a href="{% url 'product_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Danh mục sản phẩm</h3>
+                <a href="{% url 'location_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Nhà cung cấp</h3>
+                <a href="{% url 'supplier_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Nhập kho</h3>
+                <a href="{% url 'warehouse_entry_list' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Xuất nhập kho</h3>
+                <a href="{% url 'warehouse_exit_list' %}" class="button">Xem chi tiết</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

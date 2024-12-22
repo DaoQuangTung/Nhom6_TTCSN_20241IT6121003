@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xóa Phiếu Xuất Kho</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Xóa Phiếu Xuất Kho</h1>
+        <p>Bạn có chắc chắn muốn xóa phiếu xuất kho này không?</p>
+        <p>Nhà Cung Cấp: {{ exit_entry.supplier.name }}</p>
+        <p><!DOCTYPE html>
+            <html lang="vi">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sửa Phiếu Xuất Kho</title>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <style>
+                    /* Style remains the same */
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Sửa Phiếu Xuất Kho</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="exit-date">Ngày Xuất:</label>
+                            <input type="date" id="exit-date" name="exit_date" value="{{ exit_entry.exit_date }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="supplier">Nhà Cung Cấp:</label>
+                            <select name="supplier" id="supplier">
+                                {% for supplier in suppliers %}
+                                    <option value="{{ supplier.id }}" {% if supplier.id == exit_entry.supplier.id %}selected{% endif %}>
+                                        {{ supplier.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Trạng Thái:</label>
+                            <select name="status" id="status">
+                                <option value="PENDING" {% if exit_entry.status == 'PENDING' %}selected{% endif %}>Chưa xuất</option>
+                                <option value="PROCESSING" {% if exit_entry.status == 'PROCESSING' %}selected{% endif %}>Đang xử lý</option>
+                                <option value="COMPLETED" {% if exit_entry.status == 'COMPLETED' %}selected{% endif %}>Đã xuất</option>
+                            </select>
+                        </div>
+                        <h3>Sản phẩm:</h3>
+                        <div id="product-list">
+                            {% for exit_product in exit_products %}
+                                <div class="form-group">
+                                    <label>{{ exit_product.product.name }}:</label>
+                                    <input type="number" name="quantity_{{ exit_product.product.id }}" value="{{ exit_product.quantity|default:0 }}" class="quantity-input" required>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div id="other-products"></div>
+                        <div class="total-quantity">Tổng Số Lượng: <span id="total-quantity">{{ exit_entry.total_quantity }}</span></div>
+                        <div class="submit-button">
+                            <button type="submit">Cập Nhật</button>
+                        </div>
+                    </form>
+                    <a class="back-link" href="{% url 'warehouse_exit_list' %}">Quay lại danh sách</a>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        function updateTotalQuantity() {
+                            var totalQuantity = 0;
+                            $(".quantity-input").each(function() {
+                                totalQuantity += parseInt($(this).val() || 0);
+                            });
+                            $('#total-quantity').text(totalQuantity);
+                        }
+            
+                        $(".quantity-input").on('input', updateTotalQuantity);
+            
+                        $('#supplier').change(function() {
+                            var supplierId = $(this).val();
+                            if (supplierId) {
+                                $.ajax({
+                                    url: "{% url 'get_supplier_products' supplier_id='0' %}".replace('0', supplierId),
+                                    success: function(data) {
+                                        $('#other-products').empty();
+                                        data.products.forEach(function(product) {
+                                            var existingProduct = $("input[name='quantity_" + product.id + "']");
+                                            if (existingProduct.length === 0) {
+                                                var productHtml = `
+                                                    <div class="form-group">
+                                                        <label>${product.name}:</label>
+                                                        <input type="number" name="quantity_${product.id}" value="0" class="quantity-input">
+                                                    </div>
+                                                `;
+                                                $('#other-products').append(productHtml);
+                                            }
+                                        });
+                                        $(".quantity-input").off('input').on('input', updateTotalQuantity);
+                                    }
+                                });
+                            }
+                        });
+            
+                        updateTotalQuantity();
+                    });
+                </script>
+            </body>
+            </html>
+            Tổng Số Lượng: {{ exit_entry.total_quantity }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Xóa</button>
+        </form>
+        <a href="{% url 'warehouse_exit_list' %}">Quay lại danh sách</a>
+    </div>
+</body>
+</html>
